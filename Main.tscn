@@ -1,19 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://marbleTower.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/Skybox/panorama_image.png" type="Texture" id=2]
+[ext_resource path="res://main_env.tres" type="Environment" id=2]
 [ext_resource path="res://marble.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=4]
 [ext_resource path="res://addons/goutte.camera.trackball/trackball_camera.gd" type="Script" id=5]
-
-[sub_resource type="PanoramaSky" id=1]
-radiance_size = 4
-panorama = ExtResource( 2 )
-
-[sub_resource type="Environment" id=2]
-background_mode = 2
-background_sky = SubResource( 1 )
-background_energy = 2.5
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.654902, 0.254902, 0.254902, 1 )
@@ -30,7 +21,7 @@ script = ExtResource( 4 )
 marble = ExtResource( 3 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+environment = ExtResource( 2 )
 
 [node name="Marbles" type="Spatial" parent="."]
 
@@ -59,21 +50,28 @@ shape = SubResource( 5 )
 
 [node name="Lights" type="Spatial" parent="."]
 
-[node name="Light1" type="OmniLight" parent="Lights"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -6 )
+[node name="Light1" type="SpotLight" parent="Lights"]
+transform = Transform( -0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, 0, 5, -6 )
 light_energy = 15.0
-light_specular = 12.605
+light_bake_mode = 0
 shadow_enabled = true
+shadow_color = Color( 1, 1, 1, 1 )
 
-[node name="Light2" type="OmniLight" parent="Lights"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 5, 3.5 )
+[node name="Light2" type="SpotLight" parent="Lights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 5, 9.5 )
 light_energy = 5.0
-shadow_enabled = true
-
-[node name="Light3" type="DirectionalLight" parent="Lights"]
-transform = Transform( 0.664584, 0.30302, 0.683013, 0.167731, -0.951251, 0.258819, 0.728144, -0.0574445, -0.683013, -20, -5, -20 )
 light_specular = 0.0
 shadow_enabled = true
+shadow_color = Color( 1, 1, 1, 1 )
+
+[node name="Light3" type="DirectionalLight" parent="Lights"]
+transform = Transform( -0.707107, 0, -0.707107, -0.5, 0.707107, 0.5, 0.5, 0.707107, -0.5, -20, -5, -20 )
+light_energy = 0.5
+light_specular = 2.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_reverse_cull_face = true
+directional_shadow_mode = 0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
